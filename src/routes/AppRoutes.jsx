@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Flex, Spin } from "antd";
 
 // Layouts
 import MainLayout from "../layouts/MainLayout";
@@ -15,7 +17,15 @@ const Home = lazy(() => import("../pages/Home"));
 export default function AppRoutes() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+      <Suspense
+        fallback={
+          <Flex className="flex justify-center items-center h-screen w-full" align="center" gap="middle">
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+            />
+          </Flex>
+        }
+      >
         <Routes>
           {/* Public Routes */}
           <Route element={<MainLayout />}>
